@@ -9,6 +9,12 @@ import io.grpc.stub.StreamObserver;
 public class BankService extends BankServiceGrpc.BankServiceImplBase {
     @Override
     public void getBalance(BalanceCheckRequest request, StreamObserver<Balance> responseObserver) {
-        super.getBalance(request, responseObserver);
+
+        int accountNumber = request.getAccountNumber();
+        Balance balance = Balance.newBuilder()
+                .setAmount(accountNumber * 10)
+                .build();
+        responseObserver.onNext(balance);
+        responseObserver.onCompleted();
     }
 }
