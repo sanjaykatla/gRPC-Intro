@@ -20,10 +20,19 @@ message Money{
   int32 value = 1;
 }
 
+message DepositRequest{
+  int32 account_number = 1;
+  int32 amount = 2;
+}
+
 service BankService {
 
   // unary
   rpc getBalance(BalanceCheckRequest) returns(Balance);
 
+  // server streaming
   rpc withdraw(WithdrawRequest) returns(stream Money);
+
+  // client streaming
+  rpc cashDeposit(stream DepositRequest) returns(Balance);
 }
